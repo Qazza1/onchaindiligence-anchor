@@ -26,9 +26,14 @@ async function main() {
 
   const address = await registry.getAddress()
   console.log(`\n✅ AttestationRegistry deployed to: ${address}`)
+
+  const explorer =
+    network.name === 'tempoMainnet'
+      ? 'https://explore.mainnet.tempo.xyz'
+      : 'https://explore.moderato.tempo.xyz'
   console.log(`\nNext steps:`)
-  console.log(`  1. Add to your API .env:  ANCHOR_CONTRACT_ADDRESS=${address}`)
-  console.log(`  2. Verify on the explorer (Tempo testnet): https://explore.moderato.tempo.xyz/address/${address}`)
+  console.log(`  1. Add to your API env:  ANCHOR_CONTRACT_ADDRESS=${address}`)
+  console.log(`  2. Verify on the explorer: ${explorer}/address/${address}`)
 }
 
 main().catch((err) => {

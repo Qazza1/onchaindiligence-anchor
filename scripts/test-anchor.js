@@ -9,9 +9,17 @@
 const { ethers } = require('ethers')
 require('dotenv').config()
 
-const RPC = process.env.TEMPO_TESTNET_RPC || 'https://rpc.moderato.tempo.xyz'
-const CONTRACT = process.env.ANCHOR_CONTRACT_ADDRESS // set this in .env for the test
-const PK = process.env.DEPLOYER_PRIVATE_KEY
+// Network-agnostic: works for testnet or mainnet depending on the values you pass.
+//   ANCHOR_RPC_URL          — the Tempo RPC (testnet or mainnet)
+//   ANCHOR_CONTRACT_ADDRESS — the deployed AttestationRegistry address
+//   ISSUER_PRIVATE_KEY      — the issuer wallet's key (the only one allowed to anchor)
+// Falls back to the older variable names so existing .env files keep working.
+const RPC =
+  process.env.ANCHOR_RPC_URL ||
+  process.env.TEMPO_TESTNET_RPC ||
+  'https://rpc.moderato.tempo.xyz'
+const CONTRACT = process.env.ANCHOR_CONTRACT_ADDRESS
+const PK = process.env.ISSUER_PRIVATE_KEY || process.env.DEPLOYER_PRIVATE_KEY
 
 const ABI = [
   'function anchor(bytes32 attestationHash) external',
